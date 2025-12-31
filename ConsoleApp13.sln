@@ -1,25 +1,66 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31729.503
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp13", "ConsoleApp13.csproj", "{AA51B3BE-B2FF-4FF5-A92B-BDEF547C98C3}"
-EndProject
-Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{AA51B3BE-B2FF-4FF5-A92B-BDEF547C98C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AA51B3BE-B2FF-4FF5-A92B-BDEF547C98C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AA51B3BE-B2FF-4FF5-A92B-BDEF547C98C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AA51B3BE-B2FF-4FF5-A92B-BDEF547C98C3}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {7A8ABE7F-4762-4C12-B637-80BB162F80F3}
-	EndGlobalSection
-EndGlobal
+using System;
+
+namespace AcademicStaffSystem
+{
+    class Staff
+    {
+        public string Name { get; set; }
+        public string Department { get; set; }
+        public double BaseSalary { get; set; }
+
+        public Staff(string name, string department, double baseSalary)
+        {
+            Name = name;
+            Department = department;
+            BaseSalary = baseSalary;
+        }
+
+        public virtual double CalculateSalary()
+        {
+            return BaseSalary;
+        }
+    }
+
+    class Lecturer : Staff
+    {
+        public Lecturer(string name, string department, double baseSalary)
+            : base(name, department, baseSalary) { }
+
+        public override double CalculateSalary()
+        {
+            return BaseSalary * 1.2;
+        }
+    }
+
+    class Administrator : Staff
+    {
+        public Administrator(string name, string department, double baseSalary)
+            : base(name, department, baseSalary) { }
+
+        public override double CalculateSalary()
+        {
+            return BaseSalary + 300;
+        }
+    }
+
+    class Program
+    {
+        static void PrintStaff(Staff s)
+        {
+            Console.WriteLine($"{s.Name} ({s.Department}) => Total Salary: {s.CalculateSalary()}");
+        }
+
+        static void Main(string[] args)
+        {
+            Lecturer lina = new Lecturer("Lina", "CS", 1000);
+            Lecturer omar = new Lecturer("Omar", "SE", 1200);
+            Administrator ahmad = new Administrator("Ahmad", "IT", 900);
+            Administrator sara = new Administrator("Sara", "HR", 950);
+
+            PrintStaff(lina);
+            PrintStaff(omar);
+            PrintStaff(ahmad);
+            PrintStaff(sara);
+        }
+    }
+}
